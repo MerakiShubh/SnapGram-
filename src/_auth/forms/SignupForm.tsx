@@ -15,13 +15,13 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import Loader from "@/components/shared/Loader";
-import { useCreateUserAccountMutation } from "@/lib/react-query/queriesAndMutations";
+import { useCreateUserAccount } from "@/lib/react-query/queriesAndMutations";
 
 const SignupForm = () => {
   const { toast } = useToast();
 
   const { mutateAsync: createUserAccount, isLoading: isCreatingUser } =
-    useCreateUserAccountMutation();
+    useCreateUserAccount();
 
   //1. Define your form
   const form = useForm<z.infer<typeof SignupValidation>>({
