@@ -2,14 +2,14 @@ import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tansta
 import { createUserAccount } from "../appwrite/api";
 import { INewUser } from "@/types";
 
-export const useCreateUserAccountMutation = () => {
+export const useCreateUserAccount = () => {
     return useMutation({
         mutationFn: (user: INewUser) => createUserAccount(user)
     })
 
 
-export const useSingn = () => {
+export const useSingInAccount = () => {
     return useMutation({
-        mutationFn: (user: INewUser) => createUserAccount(user)
+        mutationFn: (user: {email: string, password: string}) => signInAccount(user)
     })
 }
