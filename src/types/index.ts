@@ -1,4 +1,4 @@
-export type IContextType = {
+export type wIContextType = {
   user: IUser;
   isLoading: boolean;
   setUser: React.Dispatch<React.SetStateAction<IUser>>;
