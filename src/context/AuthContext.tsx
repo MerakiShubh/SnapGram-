@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/appwrite/api";
 export const INITIAL_USER = {
   id: "",
   name: "",
+  username: "",
   email: "",
   imageUrl: "",
   bio: "",
@@ -14,7 +15,7 @@ const INITIAL_STATE = {
   isLoading: false,
   isAuthenticated: false,
   setUser: () => {},
-  setIsAuthenticated: false,
+  setIsAuthenticated: () => {},
   checkAuthUser: async () => false as boolean,
 };
 
@@ -22,27 +23,30 @@ const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser>(INITIAL_USER);
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const checkAuthUser = async () => {
     try {
-      const { $id, name, username, email, imageUrl, bio } =
-        await getCurrentUser();
+      const currentAccount = await getCurrentUser();
 
       if (currentAccount) {
         setUser({
           id: currentAccount.$id,
           name: currentAccount.name,
-          email: currentAccount.username,
+          username: currentAccount.username,
+          email: currentAccount.email,
           imageUrl: currentAccount.imageUrl,
           bio: currentAccount.bio,
         });
+        setIsAuthenticated(true);
+        return true;
       }
+      return false;
     } catch (error) {
       console.log(error);
       return false;
     } finally {
-      setisLoading(false);
+      setIsLoading(false);
     }
   };
   const value = {
@@ -51,7 +55,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     isLoading,
     isAuthenticated,
     setIsAuthenticated,
-    chekckAuthUser,
+    checkAuthUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
