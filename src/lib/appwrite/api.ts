@@ -1,9 +1,10 @@
 import { INewUser } from "@/types";
 import { ID } from "appwrite";
 import { account, appwriteConfig, avatars, databases } from "./config";
-import { Query } from "@tanstack/react-query";
+import { Query } from "appwrite";
 export async function createUserAccount(user: INewUser) {
   try {
+    //what account.create returns ?
     const newAccount = await account.create(
       ID.unique(),
       user.email,
@@ -70,7 +71,7 @@ export async function getCurrentUser() {
       appwriteConfig.userCollectionId,
       [Query.equal("accountId", currentAccount.$id)]
     );
-    if(!currentUser) throw Error;
+    if (!currentUser) throw Error;
     return currentUser.documents[0];
   } catch (error) {
     console.log(error);
