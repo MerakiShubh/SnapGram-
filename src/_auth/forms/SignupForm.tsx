@@ -19,6 +19,7 @@ import {
   useCreateUserAccount,
   useSingInAccount,
 } from "@/lib/react-query/queriesAndMutations";
+import { IContextType } from "@/types";
 
 const SignupForm = () => {
   const { toast } = useToast();
@@ -26,8 +27,8 @@ const SignupForm = () => {
   const { mutateAsync: createUserAccount, isLoading: isCreatingUser } =
     useCreateUserAccount();
 
-    const { mutateAsync: singInAccount, isLoading: isSigningIn } =
-      useSingInAccount()
+  const { mutateAsync: singInAccount, isLoading: isSigningIn } =
+    useSingInAccount();
 
   //1. Define your form
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -54,8 +55,8 @@ const SignupForm = () => {
       email: values.email,
       password: values.password,
     });
-    if(!session){
-       return toast({title: 'Sign In faild. Please try again'})
+    if (!session) {
+      return toast({ title: "Sign In faild. Please try again" });
     }
   }
 
