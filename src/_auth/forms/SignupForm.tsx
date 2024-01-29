@@ -1,6 +1,6 @@
 import { SignupValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import {
   Form,
@@ -19,15 +19,17 @@ import {
   useCreateUserAccount,
   useSingInAccount,
 } from "@/lib/react-query/queriesAndMutations";
-import { IContextType } from "@/types";
+import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
   const { toast } = useToast();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const navigate = useNavigate();
 
-  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } =
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
     useCreateUserAccount();
 
-  const { mutateAsync: singInAccount, isLoading: isSigningIn } =
+  const { mutateAsync: singInAccount, isPending: isSigningIn } =
     useSingInAccount();
 
   //1. Define your form
@@ -57,6 +59,14 @@ const SignupForm = () => {
     });
     if (!session) {
       return toast({ title: "Sign In faild. Please try again" });
+    }
+
+    const isLoggedIn = await checkAuthUser();
+    if (isLoggedIn) {
+      form.reset();
+      navigate("/");
+    } else {
+      return toast({ title: "Sign up failed. Please try again" });
     }
   }
 
@@ -142,7 +152,7 @@ const SignupForm = () => {
             )}
           />
           <Button type="submit" className="shad-button_primary">
-            {isCreatingUser ? (
+            {isCreatingAccount ? (
               <div className="flex-center gap-2 ">
                 {" "}
                 <Loader /> Loading...
