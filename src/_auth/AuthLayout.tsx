@@ -17,6 +17,12 @@ const AuthLayout = () => {
             alt="logo"
             className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat"
           />
+          <h1>Hello SnapGram</h1>
+          <h1>Hello SnapGram</h1>
+          <h1>Hello SnapGram</h1>
+          <h1>Hello SnapGram</h1>
+          <h1>Hello SnapGram</h1>
+          <h1>Hello SnapGram</h1>
         </>
       )}
     </>
