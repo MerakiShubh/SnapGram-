@@ -22,9 +22,8 @@ const App = () => {
     <main className="flex h-screen">
       <Routes>
         {/* Public Routes */}
-          <Route path="/sign-in" element={<SigninForm />} />
-          <Route path="/sign-up" element={<SignupForm />} />
-        </Route>
+        <Route path="/sign-in" element={<SigninForm />} />
+        <Route path="/sign-up" element={<SignupForm />} />
 
         {/* Private Routes */}
         <Route element={<RootLayout />}>
