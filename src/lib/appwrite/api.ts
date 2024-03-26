@@ -63,6 +63,7 @@ export async function signInAccount(user: { email: string; password: string }) {
 export async function getCurrentUser() {
   try {
     const currentAccount = await account.get();
+    console.log("Here is your current account from api ts", currentAccount);
     if (!currentAccount) {
       throw Error;
     }
@@ -71,6 +72,7 @@ export async function getCurrentUser() {
       appwriteConfig.userCollectionId,
       [Query.equal("accountId", currentAccount.$id)]
     );
+    console.log("here is your courrent user", currentUser);
     if (!currentUser) throw Error;
     return currentUser.documents[0];
   } catch (error) {

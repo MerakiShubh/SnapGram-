@@ -1,9 +1,4 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { createUserAccount } from "../appwrite/api";
 import { INewUser } from "@/types";
 import { signInAccount, signOutAccount } from "../appwrite/api";
@@ -24,3 +19,5 @@ export const useSignOutAccount = () => {
     mutationFn: signOutAccount,
   });
 };
+
+
